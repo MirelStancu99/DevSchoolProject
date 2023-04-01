@@ -29,4 +29,4 @@ def contact():
 
 # Rulăm aplicația pe localhost, portul 5000
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
