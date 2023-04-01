@@ -49,8 +49,13 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Pull and run a Docker image from container registry
+      displayName: Pull and start a Docker container from container registry
       inputs:
         command: start
+        containerRegistry: $(dockerRegistryServiceConnection)
+        repository: $(imageRepository)
+        tag: $(tag)
+        containerName: MyAPP
+        detach: true
 
 
