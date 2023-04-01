@@ -6,49 +6,13 @@ variables:
   dockerHubUsername: 'mirelstancu99'
   dockerHubPassword: 'Myrel112@@'
   imageRepository: 'mirelstancu99/devschoolproject-web'
-  containerRegistry: $(dockerHubConnection)
+  containerRegistry: $(dockerHubConnection)/$(imageRepository)
   imageTag: '$(Build.BuildId)'
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.9'
-  displayName: 'Use Python 3.9'
-
-- script: |
-    python -m venv antenv
-    source antenv/bin/activate
-    pip install -r requirements.txt
-  workingDirectory: $(Build.SourcesDirectory)
-  displayName: 'Install dependencies'
-
-- script: |
-    python app.py &
-    echo $! > antenv/app-pid
-  workingDirectory: $(Build.SourcesDirectory)
-  displayName: 'Start app'
-
-- task: Docker@2
-  displayName: Build and push an image to container registry
-  inputs:
-    containerRegistry: $(containerRegistry)
-    repository: $(imageRepository)
-    command: buildAndPush
-    Dockerfile: $(Build.SourcesDirectory)/Dockerfile
-    tags: |
-      $(imageTag)
-  env:
-    DOCKERHUB_USERNAME: $(dockerHubUsername)
-    DOCKERHUB_PASSWORD: $(dockerHubPassword)
-
-- script: |
-    docker stop $(cat antenv/app-pid)
-  workingDirectory: $(Build.SourcesDirectory)
-  displayName: 'Stop app'
-
 - task: Docker@2
   displayName: Deploy image to Azure Web App
   inputs:
