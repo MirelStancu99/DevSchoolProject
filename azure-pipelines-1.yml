@@ -1,8 +1,4 @@
-- task: AzureWebAppContainer@1
-  inputs:
-    azureSubscription: 'Azure subscription 1(5334c216-94db-441b-b614-2e0c708e2b87)'
-    appName: 'myflaskapp'
-    containers: 'devschooltest.azurecr.io/mirelstancudevschoolproject:$(Build.BuildId)'
+
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
