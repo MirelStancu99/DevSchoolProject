@@ -3,8 +3,10 @@ trigger:
 
 variables:
   dockerHubConnection: 'dockerhub'
+  dockerHubUsername: 'mirelstancu99'
+  dockerHubPassword: 'Myrel112@@'
   imageRepository: 'mirelstancu99/devschoolproject-web'
-  containerRegistry: $(dockerHubConnection)
+  containerRegistry: $(dockerHubConnection)/$(imageRepository)
   imageTag: '$(Build.BuildId)'
 
 pool:
