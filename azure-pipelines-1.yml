@@ -37,8 +37,8 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
- - stage: Deploy
-  displayName: Deploy stage
+- stage: Deploy
+  displayName: Deploying stage
   dependsOn: Build
   condition: succeeded()
   jobs:
@@ -56,4 +56,5 @@ stages:
         tag: $(tag)
         ports: |
           80:80
+
 
