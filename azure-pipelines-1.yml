@@ -1,4 +1,4 @@
-# Docker
+
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
@@ -37,6 +37,7 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
@@ -50,11 +51,6 @@ stages:
     - task: Docker@2
       displayName: Pull and run a Docker image from container registry
       inputs:
-        command: run
-        containerRegistry: $(dockerRegistryServiceConnection)
-        repository: $(imageRepository)
-        tag: $(tag)
-        ports: |
-          80:80
+        command: start
 
 
