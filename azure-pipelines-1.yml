@@ -38,24 +38,5 @@ stages:
         tags: |
           $(tag)
 
-- stage: Deploy
-  displayName: Deploy stage
-  dependsOn: Build
-  condition: succeeded()
-  jobs:
-  - job: Deploy
-    displayName: Deploy
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-    - task: Docker@2
-      displayName: Pull and start a Docker container from container registry
-      inputs:
-        command: start
-        containerRegistry: $(dockerRegistryServiceConnection)
-        repository: $(imageRepository)
-        tag: $(tag)
-        containerName: MyAPP
-        detach: true
 
 
