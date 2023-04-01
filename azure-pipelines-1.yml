@@ -37,3 +37,23 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+ - stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Pull and run a Docker image from container registry
+      inputs:
+        command: run
+        containerRegistry: $(dockerRegistryServiceConnection)
+        repository: $(imageRepository)
+        tag: $(tag)
+        ports: |
+          80:80
+
