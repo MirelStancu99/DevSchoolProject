@@ -1,14 +1,22 @@
 # Importăm bibliotecile necesare
 from flask import Flask, render_template
 import json
+import socket
 
 # Inițializăm aplicația Flask
 app = Flask(__name__)
 
+# Pentru hostname,ip section
+def fetchAddressDetail():
+    hostname = socket.gethostname()
+    host_ip = socket.gethostbyname(hostname)
+    return str(hostname), str(host_ip)
+
 # Definim ruta pentru afișarea datelor despre alimente
 @app.route('/')
 def home():
-    return render_template('index.html')
+    hostname,ip = fetchAddressDetail()
+    return render_template('index.html', HOSTNAME = hostname, IP = ip)
 
 @app.route('/foods')
 def foods():
