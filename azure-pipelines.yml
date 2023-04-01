@@ -6,7 +6,7 @@ variables:
   dockerHubUsername: 'mirelstancu99'
   dockerHubPassword: 'Myrel112@@'
   imageRepository: 'mirelstancu99/devschoolproject-web'
-  containerRegistry: $(dockerHubConnection)/$(imageRepository)
+  containerRegistry: $(dockerHubConnection)
   imageTag: '$(Build.BuildId)'
 
 pool:
