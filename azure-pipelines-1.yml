@@ -38,7 +38,7 @@ stages:
         tags: |
           $(tag)
 - stage: Deploy
-  displayName: Deploying stage
+  displayName: Deploy stage
   dependsOn: Build
   condition: succeeded()
   jobs:
