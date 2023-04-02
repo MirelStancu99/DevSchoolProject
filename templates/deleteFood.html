@@ -130,8 +130,14 @@
             <span class="text-primary font-weight-bold">{{MAXCALORIES}}</span>
           </div>
         </div>
+        <p>{{ MESAJ_EROARE }}</p>
+        <form method="POST" action="/proceseaza_stergere">
 
-
+          <label for="id">ID:</label>
+          <input type="number" id="id" name="id" required>
+          
+          <button type="submit">Sterge aliment</button>
+        </form>
         <table>
           <thead>
             <tr>

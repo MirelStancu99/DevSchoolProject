@@ -118,12 +118,6 @@ body {
 .sidebar-responsive {
   display: inline !important;
   position: absolute;
-  /*
-    the z-index of the ApexCharts is 11
-    we want the z-index of the sidebar higher so that
-    the charts are not showing over the sidebar 
-    on small screens
-  */
   z-index: 12 !important;
 }
 
@@ -147,7 +141,7 @@ body {
 
 .main-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 20px;
   margin: 20px 0;
 }
@@ -179,6 +173,9 @@ body {
 .card:nth-child(4) {
   border-left: 7px solid #cc3c43;
 }
+.card:nth-child(5) {
+  border-left: 7px solid #a19baa;
+}
 
 .card > span {
   font-size: 20px;
@@ -199,22 +196,6 @@ body {
   font-size: 35px;
 }
 
-.charts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.charts-card {
-  background-color: #ffffff;
-  margin-bottom: 20px;
-  padding: 25px;
-  box-sizing: border-box;
-  -webkit-column-break-inside: avoid;
-  border: 1px solid #d2d2d3;
-  border-radius: 5px;
-  box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
-}
 
 .chart-title {
   display: flex;
@@ -280,11 +261,6 @@ body {
     gap: 10px;
     margin-bottom: 0;
   }
-
-  .charts {
-    grid-template-columns: 1fr;
-    margin-top: 30px;
-  }
 }
 
 /* Extra Small <= 576px */
@@ -329,3 +305,22 @@ tr:nth-child(even) {
 tr:hover {
   background-color: #33acc7;
 }
+
+form {
+  box-sizing:border-box;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: hsl(0, 0%, 100%);
+  border: 2px solid hsl(0, 0%, 90%);
+  display: grid;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+label {
+  background-color: var(--table-background-color);
+  border-bottom: 2px solid var(--table-border-color);
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
