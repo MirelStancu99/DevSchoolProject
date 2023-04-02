@@ -133,6 +133,28 @@
 
         <h2>Informatii Generale</h2>
 		<p>{{ MESAJ_SUCCES}}</p>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Denumire</th>
+          <th>Număr de calorii</th>
+          <th>Proteine</th>
+          <th>Gramaj</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for food in foods %}
+        <tr>
+          <td>{{ food['id'] }}</td>
+          <td>{{ food['denumire'] }}</td>
+          <td>{{ food['calorii'] }} kcal</td>
+          <td>{{ food['proteine'] }} g proteina</td>
+          <td>{{ food['gramaj'] }} g</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
       </main>
       <!-- End Main -->
 

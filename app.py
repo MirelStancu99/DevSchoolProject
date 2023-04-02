@@ -93,7 +93,6 @@ def addFood():
     total_foods = str(resultFoodsCounter[0])
     maxResult = maxCalories["denumire"]
     minResult = minCalories["denumire"]
-    
     conn.close()
     return render_template('addFood.html', HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult,MINCALORIES=minResult, TOTALALIMENTE=total_foods)
 
@@ -132,10 +131,18 @@ def proceseaza_formular():
         cursor = conn.cursor()
         cursor.execute("INSERT INTO foods (denumire, calorii, proteine, gramaj) VALUES (?, ?, ?,?)", (denumire, numar_de_calorii, proteine,gramaj))
         conn.commit()
+        hostname,ip = fetchAddressDetail()
+        maxCalories = conn.execute('SELECT denumire FROM foods ORDER BY calorii DESC LIMIT 1').fetchone()
+        minCalories = conn.execute('SELECT denumire FROM foods ORDER BY calorii ASC LIMIT 1').fetchone()
+        resultFoodsCounter = conn.execute('SELECT COUNT(*) FROM foods').fetchone()
+        total_foods = str(resultFoodsCounter[0])
+        maxResult = maxCalories["denumire"]
+        minResult = minCalories["denumire"]
+        foods = conn.execute('SELECT * FROM foods').fetchall()
         conn.close()
         # Afișăm mesajul de succes către utilizator
         mesaj_succes = "Alimentul a fost adăugat cu succes."
-        return render_template('rezultat.html', MESAJ_SUCCES=mesaj_succes)
+        return render_template('rezultat.html', MESAJ_SUCCES=mesaj_succes ,foods=foods, HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult, MINCALORIES=minResult, TOTALALIMENTE=total_foods)
     
     #MAIN BARS
     hostname,ip = fetchAddressDetail()
@@ -202,10 +209,18 @@ def proceseaza_stergere():
         cursor = conn.cursor()
         cursor.execute("DELETE FROM foods WHERE id = ?", (id,))
         conn.commit()
+        foods = conn.execute('SELECT * FROM foods').fetchall()
+        hostname,ip = fetchAddressDetail()
+        maxCalories = conn.execute('SELECT denumire FROM foods ORDER BY calorii DESC LIMIT 1').fetchone()
+        minCalories = conn.execute('SELECT denumire FROM foods ORDER BY calorii ASC LIMIT 1').fetchone()
+        resultFoodsCounter = conn.execute('SELECT COUNT(*) FROM foods').fetchone()
+        total_foods = str(resultFoodsCounter[0])
+        maxResult = maxCalories["denumire"]
+        minResult = minCalories["denumire"]
         conn.close()
         # Afișăm mesajul de succes către utilizator
         mesaj_succes = "Alimentul a fost sters cu succes."
-        return render_template('rezultat.html', MESAJ_SUCCES=mesaj_succes)
+        return render_template('rezultat.html', MESAJ_SUCCES=mesaj_succes ,foods=foods, HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult, MINCALORIES=minResult, TOTALALIMENTE=total_foods)
     
     # Afișăm mesajul de eroare către utilizator
     #MAIN BARS
@@ -224,7 +239,6 @@ def proceseaza_stergere():
     
     conn.close()
     return render_template('deleteFood.html', MESAJ_EROARE=mesaj_eroare, foods=foods, HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult,MINCALORIES=minResult, TOTALALIMENTE=total_foods)
-
 @app.route('/contact')
 def contact():
     #MAIN BARS
