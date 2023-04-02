@@ -18,4 +18,4 @@ VALUES
     ('Supa de rosii', 150, 5, 100),
     ('Burger cu cartofi prajiti', 800, 25, 100),
     ('Paine prajita cu avocado si oua', 300, 12, 100),
-    ('Paine neprajita cu avocado si oua', 300, 12, 100);
+    ('Paine neprajita cu avocado si oua', 400, 12, 100);
