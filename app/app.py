@@ -11,9 +11,9 @@ app = Flask(__name__)
 #DATABASE
 connection = sqlite3.connect('database.db')
 #Verificam daca db/database.db este populata,daca nu, o populam
-if( os.path.isfile('database.db') and os.path.getsize('database.db') == 0 ):
-    with open('schema.sql') as f:
-        connection.executescript(f.read())
+# if( os.path.isfile('database.db') and os.path.getsize('database.db') == 0 ):
+#     with open('schema.sql') as f:
+#         connection.executescript(f.read())
 
 def get_db_connection():
     conn = sqlite3.connect('db/database.db')
