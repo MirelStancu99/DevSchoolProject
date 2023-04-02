@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: webapp
+spec:
+  replicas: #replicaNo#
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+        - name: sampleapp 
+          image: k8sexamplesacr.azurecr.io/webapp
+          ports:
+          - containerPort: 80
