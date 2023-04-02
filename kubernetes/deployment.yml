@@ -13,7 +13,7 @@ spec:
         app: webapp
     spec:
       containers:
-        - name: sampleapp 
-          image: k8sexamplesacr.azurecr.io/webapp
+        - name: webapp
+          image: devschoolproject.azurecr.io/webapp
           ports:
           - containerPort: 80
