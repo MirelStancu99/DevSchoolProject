@@ -24,7 +24,9 @@ stages:
         repository: '$(imageRepo)'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/app/Dockerfile'
-        tags: '$(tag)'
+        tags: |
+          '$(tag)'
+          latest
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: '$(Pipeline.Workspace)/s/kubernetes'
@@ -35,7 +37,7 @@ stages:
   displayName: Deploy to Dev
   dependsOn: Build
   variables:
-    acrsecret: k8sACRauth
+    acrsecret: k8sacrauth
   jobs:
   - job: Deploy
     displayName: Deploy to AKS
