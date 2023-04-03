@@ -11,7 +11,7 @@ COPY app.py .
 # Instalam pachetele necesare
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY . /app/
 # Dezvăluim portul 80 pe care rulează aplicația
 EXPOSE 3000
 
