@@ -11,8 +11,8 @@ COPY app.py .
 # Instalam pachetele necesare
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Dezvăluim portul 5000 pe care rulează aplicația
-# EXPOSE 5000
+# Dezvăluim portul 80 pe care rulează aplicația
+EXPOSE 80
 
 # Definim comanda care va rula aplicația
 CMD ["python", "app.py"]
