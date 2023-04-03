@@ -16,4 +16,4 @@ spec:
         - name: webapp
           image: devschoolproject.azurecr.io/webapp
           ports:
-          - containerPort: 80
+          - containerPort: 3000
