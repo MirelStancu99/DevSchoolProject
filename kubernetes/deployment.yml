@@ -18,12 +18,16 @@ spec:
           ports:
           - containerPort: 5000
             protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /health
+          readinessProbe:
+            tcpSocket:
               port: 5000
-            initialDelaySeconds: 2
-            periodSeconds: 5
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
           resources:
             requests:
               cpu: 250m
