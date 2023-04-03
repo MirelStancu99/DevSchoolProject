@@ -4,9 +4,9 @@ services:
   web:
     build: .
     ports:
-      - "5000:5000"
+      - "3000:3000"
     volumes:
       - .:/app
     environment:
       FLASK_APP: app.py
-    command: flask run --host=0.0.0.0
+    command: flask run 
