@@ -7,10 +7,12 @@ WORKDIR /app
 # Copiem fișierele necesare în container
 COPY requirements.txt .
 COPY app.py .
+COPY . .
 
 # Instalam pachetele necesare
 RUN pip install --no-cache-dir -r requirements.txt
 
+VOLUME ["/app"]
 # # Dezvăluim portul 5000 pe care rulează aplicația
 EXPOSE 5000
 
