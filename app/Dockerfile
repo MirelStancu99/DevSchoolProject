@@ -12,7 +12,7 @@ COPY app.py .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Dezvăluim portul 80 pe care rulează aplicația
-EXPOSE 80
+EXPOSE 3000
 
 # Definim comanda care va rula aplicația
 CMD ["python", "app.py"]
