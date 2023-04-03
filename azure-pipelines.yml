@@ -38,7 +38,7 @@ stages:
   variables:
     acrsecret: k8sacrauth
     acrdevurl: 'devschoolproject.azurecr.io'
-    replicaNo: 1
+    replicaNo: 3
   jobs:
   - deployment: Deploy
     displayName: Deploy to AKS
