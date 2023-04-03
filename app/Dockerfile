@@ -11,8 +11,11 @@ COPY app.py .
 # Instalam pachetele necesare
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Dezvăluim portul 80 pe care rulează aplicația
-EXPOSE 80
+# # Dezvăluim portul 5000 pe care rulează aplicația
+EXPOSE 5000
 
-# Definim comanda care va rula aplicația
-CMD ["python", "app.py"]
+# # Definim comanda care va rula aplicația
+# CMD ["python", "app.py"]
+ENV FLASK_APP=app.py
+
+CMD flask run --host=0.0.0.0
