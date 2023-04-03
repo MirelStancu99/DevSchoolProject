@@ -6,5 +6,6 @@ spec:
     type: LoadBalancer
     ports:
     - port: 3000
+      protocol: TCP
     selector:
         app: webapp
