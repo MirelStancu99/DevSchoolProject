@@ -17,6 +17,7 @@ spec:
           image: devschoolproject.azurecr.io/webapp
           ports:
           - containerPort: 3000
+            protocol: TCP
           livenessProbe:
             failureThreshold: 3
             initialDelaySeconds: 30
