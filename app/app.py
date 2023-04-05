@@ -281,6 +281,16 @@ def liveness():
         color = "red"
     return render_template('liveness.html',API_URL = api_url, COLOR = color,RESPONSE = responseSTR,HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult,MINCALORIES=minResult, TOTALALIMENTE=total_foods)
 
+@app.route('/check_api')
+def check_api():
+    api_url = "https://jsonplaceholder.typicode.com/users"
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        return jsonify({'message': 'API is up'}), 200
+    else:
+        return jsonify({'message': 'API is down'}), 500
+    
 @app.route('/api')
 def api():
     #MAIN BARS
