@@ -197,15 +197,6 @@ body {
 }
 
 
-.chart-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  font-weight: 600;
-}
-
-
 /* ---------- SCROLLBARS ---------- */
 
 ::-webkit-scrollbar {
@@ -323,4 +314,22 @@ label {
   margin-bottom: 10px;
   text-align: center;
 }
+.liveness {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: #1f3d20;
+  border: 2px solid #1f3d20;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  height: 100px;
+  width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
 
