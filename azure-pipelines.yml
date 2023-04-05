@@ -31,25 +31,7 @@ stages:
         targetPath: '$(Pipeline.Workspace)/s/kubernetes'
         artifact: 'manifests'
         publishLocation: 'pipeline'
-- stage: test
-  displayName: 'Test'
-  jobs:
-  - job: test
-    displayName: 'Test API'
-    steps:
-    - script: |
-        curl http://localhost:5000/check_api
-      displayName: 'Send API test request'
-    - script: |
-        if [ "$?" -eq 0 ]
-        then
-          echo "API test succeeded"
-          exit 0
-        else
-          echo "API test failed"
-          exit 1
-        fi
-      displayName: 'Check API test response'
+
 - stage: Deploy
   displayName: Deploy to Dev
   dependsOn: Build
@@ -101,4 +83,24 @@ stages:
                 $(Pipeline.Workspace)/manifests/deployment.yml
                 $(Pipeline.Workspace)/manifests/service.yml
               containers: '$(acrdevurl)/$(imageRepo):$(tag)'
-    
+- stage: Test
+  displayName: 'Test'
+  dependsOn: Deploy
+  jobs:
+  - job: test
+    displayName: 'Test API'
+    steps:
+    - script: |
+        curl http://20.101.12.64:5000/check_api
+      displayName: 'Send API test request'
+    - script: |
+        if [ "$?" -eq 0 ]
+        then
+          echo "API test succeeded"
+          exit 0
+        else
+          echo "API test failed"
+          exit 1
+        fi
+      displayName: 'Check API test response'
+
