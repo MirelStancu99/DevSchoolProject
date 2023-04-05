@@ -96,7 +96,6 @@ def addFood():
     conn.close()
     return render_template('addFood.html', HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult,MINCALORIES=minResult, TOTALALIMENTE=total_foods)
 
-
 def check_food_name(name):
     conn = get_db_connection()
     result = conn.execute('SELECT * FROM foods WHERE denumire = ?', (name,)).fetchone()
@@ -239,6 +238,7 @@ def proceseaza_stergere():
     
     conn.close()
     return render_template('deleteFood.html', MESAJ_EROARE=mesaj_eroare, foods=foods, HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult,MINCALORIES=minResult, TOTALALIMENTE=total_foods)
+
 @app.route('/contact')
 def contact():
     #MAIN BARS
@@ -255,6 +255,7 @@ def contact():
     conn.close()
 
     return render_template('contact.html', HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult,MINCALORIES=minResult, TOTALALIMENTE=total_foods)
+
 @app.route('/liveness')
 def liveness():
     #MAIN BARS
@@ -279,6 +280,7 @@ def liveness():
         responseSTR = "API is down"
         color = "red"
     return render_template('liveness.html',COLOR = color,RESPONSE = responseSTR,HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult,MINCALORIES=minResult, TOTALALIMENTE=total_foods)
+
 @app.route('/api')
 def api():
     #MAIN BARS
@@ -323,6 +325,7 @@ def apiOrdonat():
     responses = sorted(responses, key=lambda k: k['name'])
     
     return render_template('apiOrdonat.html',responses = responses,HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult,MINCALORIES=minResult, TOTALALIMENTE=total_foods)
+
 # Rulăm aplicația pe localhost, portul 5000
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
