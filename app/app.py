@@ -279,7 +279,7 @@ def liveness():
     else:
         responseSTR = "API is down"
         color = "red"
-    return render_template('liveness.html',API_URL = api_url, COLOR = color,RESPONSE = responseSTR,HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult,MINCALORIES=minResult, TOTALALIMENTE=total_foods)
+    return render_template('liveness.html', COLOR = color,RESPONSE = responseSTR,HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult,MINCALORIES=minResult, TOTALALIMENTE=total_foods)
 
 @app.route('/check_api')
 def check_api():
