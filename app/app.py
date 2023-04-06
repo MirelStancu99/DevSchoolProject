@@ -287,7 +287,7 @@ def check_api():
     response = requests.get(api_url)
 
     if response.status_code == 200:
-        return jsonify({'message': 'API is up'}), 200
+        return jsonify({'message': 'API is up at this moment'}), 200
     else:
         return jsonify({'message': 'API is down'}), 500
     
