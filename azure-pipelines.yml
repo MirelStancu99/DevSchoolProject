@@ -84,7 +84,7 @@ stages:
                 $(Pipeline.Workspace)/manifests/service.yml
               containers: '$(acrdevurl)/$(imageRepo):$(tag)'
 - stage: Test
-  displayName: 'Test'
+  displayName: 'Test API'
   dependsOn: Deploy
   jobs:
   - job: test
