@@ -35,7 +35,7 @@ spec:
               cpu: 250m
               memory: 750Mi
           volumeMounts:
-            - mountPath: /app/database.db
+            - mountPath: /app
               name: app-pv
       volumes:
         - name: app-pv
