@@ -22,3 +22,11 @@ spec:
             requests:
               cpu: 250m
               memory: 750Mi
+          volumeMounts:
+          - name: data-volume
+            mountPath: /webapp/database.db
+            subPath: database.db
+      volumes:
+        - name: data-volume
+          hostPath:
+            path: /app/database.db
