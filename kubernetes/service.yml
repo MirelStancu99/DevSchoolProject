@@ -8,4 +8,3 @@ spec:
     - port: 5000
     selector:
         app: webapp
-    sessionAffinity: ClientIP
