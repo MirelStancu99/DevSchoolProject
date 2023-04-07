@@ -1,0 +1,29 @@
+COMMAND
+          Specifies the action to perform. The available commands are:
+
+          build   Build a Docker image from a Dockerfile.
+
+          push    Push a Docker image to a remote repository.
+
+          deploy  Deploy a Docker container using Docker or Minikube.
+
+          test    Test a URL by sending a GET request and checking the response status code.
+
+ARGUMENTS
+          The arguments for each command are as follows:
+
+          build   ARG1: path to the directory containing the Dockerfile.
+                  ARG2: name of the Docker image.
+                  ARG3: version of the Docker image.
+
+          push    ARG1: Docker image name.
+                  ARG2: Docker registry URL.
+                  ARG3: Docker image version.
+
+          deploy  ARG1: deployment type (either "docker" or "kubernetes").
+                  ARG2: path to the deployment configuration file.
+                  ARG3: Docker image name.
+                  ARG4: Docker image version (only for Kubernetes deployments).
+                  ARG5: (optional) Kubernetes namespace (only for Kubernetes deployments).
+
+          test    ARG1: URL to test.
