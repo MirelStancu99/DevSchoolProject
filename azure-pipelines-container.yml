@@ -35,12 +35,11 @@ stages:
         tags: |
           latest
           $(Build.BuildId)
-
 - stage: Deploy
   displayName: Deploy
   jobs:
-  - job: Build
-    displayName: Build
+  - job: Deploy
+    displayName: Deploy a container
     pool:
       vmImage: $(vmImageName)
     steps:
@@ -48,4 +47,23 @@ stages:
       inputs:
         azureSubscription: 'DevSchoolING (5334c216-94db-441b-b614-2e0c708e2b87)'
         appName: $(appName)
-        imageName: $(containerRegistry)/$(imageRepository):$(tag)
+- stage: Test
+  displayName: 'Test API'
+  dependsOn: Deploy
+  jobs:
+  - job: test
+    displayName: 'Test API'
+    steps:
+    - script: |
+        curl https://webapponecontainerdeploy.azurewebsites.net/check_api
+      displayName: 'Send API test request'
+    - script: |
+        if [ "$?" -eq 0 ]
+        then
+          echo "API test succeeded"
+          exit 0
+        else
+          echo "API test failed"
+          exit 1
+        fi
+      displayName: 'Check API test response'
