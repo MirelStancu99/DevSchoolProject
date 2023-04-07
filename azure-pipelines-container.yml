@@ -46,6 +46,7 @@ stages:
       inputs:
         azureSubscription: 'DevSchoolING (5334c216-94db-441b-b614-2e0c708e2b87)'
         appName: $(appName)
+        imageName: $(containerRegistry)/$(imageRepository):$(tag)
 - stage: Test
   displayName: 'Test API'
   dependsOn: Deploy
