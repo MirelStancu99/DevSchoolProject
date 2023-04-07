@@ -33,8 +33,7 @@ stages:
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
-          latest
-          $(Build.BuildId)
+          $(tag)
 - stage: Deploy
   displayName: Deploy
   jobs:
