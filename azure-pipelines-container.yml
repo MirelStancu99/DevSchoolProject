@@ -11,6 +11,7 @@ variables:
   containerRegistry: 'acrcontainerdeploy.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
   tag: '$(Build.BuildId)'
+  appName: 'WebAppOneContainerDeploy'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -46,5 +47,6 @@ stages:
     - task: AzureWebAppContainer@1
       inputs:
         azureSubscription: 'DevSchoolING (5334c216-94db-441b-b614-2e0c708e2b87)'
-        appName: 'WebAppOneContainerDeploy'
-        containers: 'acrcontainerdeploy.azurecr.io/webapp:latest'
+        appName: $(appName)
+        imageName: $(containerRegistry)/$(imageRepository):$(tag)
+        appSettings: '-Port 5000'
