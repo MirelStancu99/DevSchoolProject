@@ -34,3 +34,17 @@ stages:
         tags: |
           latest
           $(Build.BuildId)
+
+- stage: Deploy
+  displayName: Deploy
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: AzureWebAppContainer@1
+      inputs:
+        azureSubscription: 'DevSchoolING (5334c216-94db-441b-b614-2e0c708e2b87)'
+        appName: 'WebAppOneContainerDeploy'
+        containers: 'acrcontainerdeploy.azurecr.io/webapp:latest'
