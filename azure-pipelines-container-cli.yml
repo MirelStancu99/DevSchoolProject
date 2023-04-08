@@ -39,6 +39,7 @@ stages:
 
 - stage: Deploy
   displayName: Deploy
+  dependsOn: Build
   jobs:
   - job: Deploy
     displayName: Deploy a container
@@ -54,3 +55,23 @@ stages:
           acrPassword=$(az keyvault secret show --name acr-password --vault-name $(keyVaultName) --query value -o tsv)
           acrNameSecret=$(az keyvault secret show --name acrName --vault-name $(keyVaultName) --query value -o tsv)
           az container create --resource-group $(resourceGroupName) --name $(containerName) --image $(acrName).azurecr.io/$(imageName):$(imageTag) --cpu $(cpuCores) --memory $(memoryGB) --registry-login-server $(acrName).azurecr.io --registry-username $acrNameSecret --registry-password $acrPassword --ip-address public --ports 5000
+- stage: Test
+  displayName: 'Test API with curl'
+  dependsOn: Deploy
+  jobs:
+  - job: test
+    displayName: 'Test API'
+    steps:
+    - script: |
+        curl http://20.160.242.151/check_api
+      displayName: 'Send API test request'
+    - script: |
+        if [ "$?" -eq 0 ]
+        then
+          echo "API test succeeded"
+          exit 0
+        else
+          echo "API test failed"
+          exit 1
+        fi
+      displayName: 'Check API test response'
