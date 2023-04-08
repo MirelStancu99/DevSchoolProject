@@ -53,4 +53,4 @@ stages:
         inlineScript: |
           acrPassword=$(az keyvault secret show --name acr-password --vault-name $(keyVaultName) --query value -o tsv)
           acrNameSecret=$(az keyvault secret show --name acrName --vault-name $(keyVaultName) --query value -o tsv)
-          az container create --resource-group $(resourceGroupName) --name $(containerName) --image $(acrName).azurecr.io/$(imageName):$(imageTag) --cpu $(cpuCores) --memory $(memoryGB) --registry-login-server $(acrNameSecret).azurecr.io --registry-username $(acrNameSecret) --registry-password $acrPassword --ip-address public --ports 5000
+          az container create --resource-group $(resourceGroupName) --name $(containerName) --image $(acrName).azurecr.io/$(imageName):$(imageTag) --cpu $(cpuCores) --memory $(memoryGB) --registry-login-server $(acrName).azurecr.io --registry-username $acrNameSecret --registry-password $acrPassword --ip-address public --ports 5000
