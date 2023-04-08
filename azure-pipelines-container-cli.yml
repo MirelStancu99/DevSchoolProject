@@ -63,7 +63,7 @@ stages:
     displayName: 'Test API'
     steps:
     - script: |
-        curl http://20.160.242.151/check_api
+        curl http://20.160.242.151:5000/check_api
       displayName: 'Send API test request'
     - script: |
         if [ "$?" -eq 0 ]
