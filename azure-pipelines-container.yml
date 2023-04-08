@@ -43,12 +43,13 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: AzureWebAppContainer@1
+    displayName: Deploy a container with AzureWebAppContainer
       inputs:
         azureSubscription: 'DevSchoolING (5334c216-94db-441b-b614-2e0c708e2b87)'
         appName: $(appName)
         imageName: $(containerRegistry)/$(imageRepository):$(tag)
 - stage: Test
-  displayName: 'Test API'
+  displayName: 'Test API with curl'
   dependsOn: Deploy
   jobs:
   - job: test

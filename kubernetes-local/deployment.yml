@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: webapp
-          image: luiciudin/ing-app:latest
+          image: mirelstancu99/webapp-script:latest
           ports:
           - containerPort: 5000
             protocol: TCP

@@ -43,7 +43,6 @@ else
         arg3=$(echo $4 | cut -d'=' -f2)
 fi
 
-command1=$(echo "$arg2" | grep -q "deployment")
 
 case $cmd in
     build)
@@ -61,7 +60,7 @@ case $cmd in
 		arg5="${arg3}:${arg4}"
 		sed -i "s@image:.*@image: $arg5@" $arg2 2> /dev/null
            	kubectl apply -f $arg2
-	else
+	    else
 		kubectl apply -f $arg2
 		minikube tunnel
 		
@@ -69,7 +68,7 @@ case $cmd in
         ;;
     test)
         response=$(curl -s -o /dev/null -w "%{http_code}" $arg1)
-	echo "Command: $response"
+	    echo "Command: $response"
         if [[ $response -eq 200 ]]; then
             echo "Test passed: received 200 response"
         else
@@ -78,7 +77,7 @@ case $cmd in
         fi
         ;;
     man)
-	cat manual.txt
+	    cat manual.txt
 	;;
 esac
 

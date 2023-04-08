@@ -1,0 +1,58 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  resourceGroupName: 'DevSchool'
+  containerName: 'ACRclideployment'
+  acrName: 'acrclideployment'
+  imageName: 'webapp'
+  imageTag: '$(Build.BuildId)'
+  dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
+  dockerRegistryServiceConnection: '809cf38a-bceb-4122-b3f8-71f4a0dbace6'
+  cpuCores: '1'
+  memoryGB: '1'
+  azureSubscription: 'DevSchoolING'
+  keyVaultName: 'keyVaultDevSchool'
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+          displayName: Build and push an image to container registry
+          inputs:
+            command: buildAndPush
+            repository: $(imageName)
+            dockerfile: $(dockerfilePath)
+            containerRegistry: $(dockerRegistryServiceConnection)
+            tags: |
+              $(imageTag)
+
+- stage: Deploy
+  displayName: Deploy
+  jobs:
+  - job: Deploy
+    displayName: Deploy a container
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: '$(azureSubscription)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          acrPassword=$(az keyvault secret show --name acr-password --vault-name $(keyVaultName) --query value -o tsv)
+          az container create --resource-group $(resourceGroupName) --name $(containerName) --image $(acrName).azurecr.io/$(imageName):$(imageTag) --cpu $(cpuCores) --memory $(memoryGB) --registry-login-server $(acrName).azurecr.io --registry-username $(acrName) --registry-password $acrPassword
+      env:
+        ARM_CLIENT_ID: $(servicePrincipalId)
+        ARM_CLIENT_SECRET: $(servicePrincipalKey)
+        ARM_TENANT_ID: $(tenantId)
