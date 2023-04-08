@@ -14,7 +14,7 @@ variables:
   dockerRegistryServiceConnection: '809cf38a-bceb-4122-b3f8-71f4a0dbace6'
   cpuCores: '1'
   memoryGB: '1'
-  azureSubscription: 'DevSchoolING'
+  azureSubscription: 'DevSchoolING (5334c216-94db-441b-b614-2e0c708e2b87)'
   keyVaultName: 'keyVaultDevSchool'
   vmImageName: 'ubuntu-latest'
 
@@ -54,7 +54,3 @@ stages:
           az acr login --name $(acrName)
           acrPassword=$(az keyvault secret show --name acr-password --vault-name $(keyVaultName) --query value -o tsv)
           az container create --resource-group $(resourceGroupName) --name $(containerName) --image $(acrName).azurecr.io/$(imageName):$(imageTag) --cpu $(cpuCores) --memory $(memoryGB) --registry-login-server $(acrName).azurecr.io --registry-username $(acrName) --registry-password $acrPassword
-      env:
-        ARM_CLIENT_ID: $(servicePrincipalId)
-        ARM_CLIENT_SECRET: $(servicePrincipalKey)
-        ARM_TENANT_ID: $(tenantId)
