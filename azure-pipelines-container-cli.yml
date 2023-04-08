@@ -15,7 +15,7 @@ variables:
   cpuCores: '1'
   memoryGB: '1'
   azureSubscription: 'DevSchoolING (5334c216-94db-441b-b614-2e0c708e2b87)'
-  keyVaultName: 'acrPassword'
+  keyVaultName: 'keyVaultDevSchool'
   vmImageName: 'ubuntu-latest'
 
 stages:
