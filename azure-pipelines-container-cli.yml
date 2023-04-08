@@ -15,7 +15,7 @@ variables:
   cpuCores: '1'
   memoryGB: '1'
   azureSubscription: 'DevSchoolING (5334c216-94db-441b-b614-2e0c708e2b87)'
-  keyVaultName: 'keyVaultDevSchool'
+  keyVaultName: 'acrPassword'
   vmImageName: 'ubuntu-latest'
 
 stages:
@@ -52,5 +52,4 @@ stages:
         scriptLocation: 'inlineScript'
         inlineScript: |
           az acr login --name $(acrName)
-          acrPassword=$(az keyvault secret show --name acr-password --vault-name $(keyVaultName) --query value -o tsv)
-          az container create --resource-group $(resourceGroupName) --name $(containerName) --image $(acrName).azurecr.io/$(imageName):$(imageTag) --cpu $(cpuCores) --memory $(memoryGB) --registry-login-server $(acrName).azurecr.io --registry-username $(acrName) --registry-password $acrPassword
+          az container create --resource-group $(resourceGroupName) --name $(containerName) --image $(acrName).azurecr.io/$(imageName):$(imageTag) --cpu $(cpuCores) --memory $(memoryGB)
