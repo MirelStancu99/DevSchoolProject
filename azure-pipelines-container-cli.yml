@@ -6,7 +6,7 @@ pool:
 
 variables:
   resourceGroupName: 'DevSchool'
-  containerName: 'ACRclideployment'
+  containerName: 'acrclideployment'
   acrName: 'acrclideployment'
   imageName: 'webapp'
   imageTag: '$(Build.BuildId)'
@@ -51,6 +51,5 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          az acr login --name $(acrName)
           acrPassword=$(az keyvault secret show --name acr-password --vault-name $(keyVaultName) --query value -o tsv)
           az container create --resource-group $(resourceGroupName) --name $(containerName) --image $(acrName).azurecr.io/$(imageName):$(imageTag) --cpu $(cpuCores) --memory $(memoryGB) --registry-login-server $(acrName).azurecr.io --registry-username $(acrName) --registry-password $acrPassword
