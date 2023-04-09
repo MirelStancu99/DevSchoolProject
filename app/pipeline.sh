@@ -1,39 +1,12 @@
 #!/bin/bash
 
-#-h, --help
- #         Display a help message.
-
-  # COMMAND
-   #       Specifies the action to perform. The available commands are:
-
-    #      build   Build a Docker image from a Dockerfile.
-
-     #     push    Push a Docker image to a remote repository.
-
-      #    deploy  Deploy a Docker container using Kubernetes or Minikube.
-
-       #   test    Test a URL by sending a GET request and checking the response status code.
-
- #  ARGUMENTS
-  #        The arguments for each command are as follows:
-
-   #       build   ARG1: path to the directory containing the Dockerfile.
-    #              ARG2: name of the Docker image.
-     #             ARG3: version of the Docker image.
-
-      #    push    ARG1: Docker image name.
-       #           ARG2: Docker registry URL.
-        #          ARG3: Docker image version.
-
-         # deploy  ARG1: deployment type (either "docker" or "kubernetes").
-          #        ARG2: path to the deployment configuration file.
-           #       ARG3: Docker image name.
-            #      ARG4: Docker image version (only for Kubernetes deployments).
-             #     ARG5: (optional) Kubernetes namespace (only for Kubernetes deployments).
-
-         # test    ARG1: URL to test.
-
-cmd=$1
+bool=0
+if [[ $# -lt 1 ]]; then
+        echo "Please provide a command for this script. To see all the commands available, try "help" command."
+        bool=1
+else
+        cmd=$1
+fi
 
 if [[ $# -lt 3 ]]; then
         arg1=$(echo $2| cut -d'=' -f2)
@@ -43,18 +16,18 @@ else
         arg3=$(echo $4 | cut -d'=' -f2)
 fi
 
-
 case $cmd in
-    #$ ./pipeline.sh build --dockerFilePath=. --imageName=webapp-script --imageTag=latest
     build)
+        #output=$(docker build -t $arg2:$arg3 $arg1)
+        #if echo "$output" | grep -q "error"; then
+        #       echo "Wrong arguments for the command $cmd. To see the right use, try "help" command."
+        #fi
         docker build -t $arg2:$arg3 $arg1
         ;;
-    #$ ./pipeline.sh push --containerRegistryUsername=mirelstancu99 --imageName=webapp-script --imageTag=latest
     push)
         docker tag $arg2 $arg1/$arg2:$arg3
         docker push $arg1/$arg2:$arg3
         ;;
-    #$ ./pipeline.sh pushacr --azureContainerRegistryName=acrdockerlocal --imageName=webapp-script --imageTag=latest
     pushacr)
         az login
         ACR_NAME=$arg1
@@ -62,28 +35,24 @@ case $cmd in
         docker tag $arg2 $ACR_NAME.azurecr.io/$arg2:$arg3
         docker push $ACR_NAME.azurecr.io/$arg2:$arg3
         ;;
-    #./pipeline.sh deploy --flavour='docker' --imageName=mirelstancu99/webapp-script --imageTag=latest
     deploy)
         if [[ $arg1 == "docker" ]]; then
             docker container run -dp 5000:5000 $arg2:$arg3
+        elif echo "$arg2" | grep -q "deployment"; then
+                arg4=$(echo $5 | cut -d'=' -f2)
+                arg5="${arg3}:${arg4}"
+                sed -i "s@image:.*@image: $arg5@" $arg2 2> /dev/null
+                minikube start
+                kubectl apply -f $arg2
+        else
+                kubectl apply -f $arg2
+                minikube tunnel
 
-    	elif echo "$arg2" | grep -q "deployment"; then
-		arg4=$(echo $5 | cut -d'=' -f2)
-		arg5="${arg3}:${arg4}"
-		sed -i "s@image:.*@image: $arg5@" $arg2 2> /dev/null
-        minikube start
-        kubectl apply -f $arg2
-
-	    else
-		kubectl apply -f $arg2
-		minikube tunnel
-		
         fi
         ;;
-
     test)
         response=$(curl -s -o /dev/null -w "%{http_code}" $arg1)
-	    echo "Command: $response"
+        echo "Command: $response"
         if [[ $response -eq 200 ]]; then
             echo "Test passed: received 200 response"
         else
@@ -91,10 +60,14 @@ case $cmd in
             exit 1
         fi
         ;;
-
-    man)
-	    cat manual.txt
-	;;
+    help)
+        cat manual.txt
+        ;;
+    *)
+        if [[ $bool -eq 0 ]]; then
+                echo "Invalid command: $cmd. To see all the commands available, try "help" command."
+        fi
+        ;;
 esac
 
 exit 0
