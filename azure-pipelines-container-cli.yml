@@ -10,8 +10,6 @@ variables:
   acrName: 'acrclideployment'
   imageName: 'webapp'
   imageTag: '$(Build.BuildId)'
-  dockerfilePath: '$(Build.SourcesDirectory)/app/Dockerfile'
-  dockerRegistryServiceConnection: '809cf38a-bceb-4122-b3f8-71f4a0dbace6'
   cpuCores: '1'
   memoryGB: '1'
   azureSubscription: 'DevSchoolING (5334c216-94db-441b-b614-2e0c708e2b87)'
@@ -33,7 +31,7 @@ stages:
         fi
       displayName: "Check connection"
 - stage: Build
-  displayName: Build
+  displayName: Build and push stage
   dependsOn: Prepare
   jobs:
   - job: Build
@@ -47,7 +45,6 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          acrPassword=$(az keyvault secret show --name acr-password --vault-name $(keyVaultName) --query value -o tsv)
           az acr login --name $(acrName)
           az acr build --registry $(acrName) --image $(imageName):$(imageTag) ./app
 - stage: Deploy
