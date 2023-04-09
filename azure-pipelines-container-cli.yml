@@ -19,8 +19,23 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
+- stage: Prepare
+  jobs:
+  - job: check_connection
+    steps:
+    - script: |
+        #!/bin/bash
+
+        if ping -q -c 1 -W 1 google.com >/dev/null; then
+          echo "Connection available."
+        else
+          echo "Connection not available."
+          exit 1
+        fi
+      displayName: "Check connection"
 - stage: Build
   displayName: Build and push stage
+  dependsOn: Prepare
   jobs:
   - job: Build
     displayName: Build
