@@ -16,8 +16,22 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
+- stage: Prepare
+  jobs:
+  - job: Prepare
+    steps:
+    - script: |
+        #!/bin/bash
+        if curl -sSf https://www.google.com > /dev/null; then
+          echo "Connection available."
+        else
+          echo "Connection not available."
+          exit 1
+        fi
+      displayName: "Check connection"
 - stage: Build
   displayName: Build and push stage
+  dependsOn: Prepare
   jobs:
   - job: Build
     displayName: Build
@@ -35,6 +49,7 @@ stages:
           $(tag)
 - stage: Deploy
   displayName: Deploy
+  dependsOn: Build
   jobs:
   - job: Deploy
     displayName: Deploy a container

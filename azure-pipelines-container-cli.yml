@@ -21,7 +21,7 @@ variables:
 stages:
 - stage: Prepare
   jobs:
-  - job: check_connection
+  - job: Prepare
     steps:
     - script: |
         #!/bin/bash

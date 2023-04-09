@@ -8,8 +8,22 @@ variables:
   tag: '$(Build.BuildId)'
 
 stages:
+- stage: Prepare
+  jobs:
+  - job: Prepare
+    steps:
+    - script: |
+        #!/bin/bash
+        if curl -sSf https://www.google.com > /dev/null; then
+          echo "Connection available."
+        else
+          echo "Connection not available."
+          exit 1
+        fi
+      displayName: "Check connection"
 - stage: Build
   displayName: Build image
+  dependsOn: Prepare
   jobs:
   - job: Build
     displayName: Build
