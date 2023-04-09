@@ -97,85 +97,14 @@
       </aside>
       <!-- End Sidebar -->
 
-      <!-- Main -->
-      <main class="main-container">
-        <div class="main-title">
-          <p class="font-weight-bold">UTILIZATORI ORDONATI ALFABETIC DUPA NUME</p>
-        </div>
-
-        <div class="main-cards">
-
-          <div class="card">
-            <div class="card-inner">
-              <p class="text-primary">POD NAME</p>
-              <!-- <span class="material-icons-outlined text-blue">inventory_2</span> -->
-            </div>
-            <span class="text-primary font-weight-bold">{{ HOSTNAME }}</span>
-          </div>
-
-          <div class="card">
-            <div class="card-inner">
-              <p class="text-primary">POD IP ADDRESS</p>
-              <!-- <span class="material-icons-outlined text-orange">add_shopping_cart</span> -->
-            </div>
-            <span class="text-primary font-weight-bold">{{ IP }}</span>
-          </div>
-
-          <div class="card">
-            <div class="card-inner">
-              <p class="text-primary">Numarul total de alimente</p>
-              <!-- <span class="material-icons-outlined text-green">shopping_cart</span> -->
-            </div>
-            <span class="text-primary font-weight-bold">{{TOTALALIMENTE}}</span>
-          </div>
-
-          <div class="card">
-            <div class="card-inner">
-              <p class="text-primary">Cel mai slab caloric preparat</p>
-              <!-- <span class="material-icons-outlined text-red">notification_important</span> -->
-            </div>
-            <span class="text-primary font-weight-bold">{{MINCALORIES}}</span>
-          </div>
-
-          <div class="card">
-            <div class="card-inner">
-              <p class="text-primary">Cel mai bogat caloric preparat</p>
-              <!-- <span class="material-icons-outlined text-red">star</span> -->
-            </div>
-            <span class="text-primary font-weight-bold">{{MAXCALORIES}}</span>
-          </div>
-        </div>
-
-
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Nume</th>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Telefon</th>
-              <th>Website</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for response in responses %}
-            <tr>
-              <td>{{ response['id'] }}</td>
-              <td>{{ response['name'] }}</td>
-              <td>{{ response['username'] }}</td>
-              <td>{{ response['email'] }}</td>
-              <td>{{ response['phone'] }}</td>
-              <td>{{ response['website'] }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </main>
-      <!-- End Main -->
-
+      <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%;
+      padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+      border-radius: 8px; will-change: transform;">
+       <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+         src="https:&#x2F;&#x2F;www.canva.com&#x2F;design&#x2F;DAFfahzPyPM&#x2F;view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
+       </iframe>
+     </div>
     </div>
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
   </body>
-  
 </html>
