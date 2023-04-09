@@ -33,24 +33,23 @@ stages:
         fi
       displayName: "Check connection"
 - stage: Build
-  displayName: Build and push stage
+  displayName: Build
   dependsOn: Prepare
   jobs:
   - job: Build
-    displayName: Build
+    displayName: Build and push
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
+    - task: AzureCLI@2
       inputs:
-        command: buildAndPush
-        repository: $(imageName)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(acrName)
-        tags: |
-          $(imageTag)
-
+        azureSubscription: '$(azureSubscription)'
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          acrPassword=$(az keyvault secret show --name acr-password --vault-name $(keyVaultName) --query value -o tsv)
+          az acr login --name $(acrName)
+          az acr build --registry $(acrName) --image $(imageName):$(imageTag) ./app
 - stage: Deploy
   displayName: Deploy
   dependsOn: Build
