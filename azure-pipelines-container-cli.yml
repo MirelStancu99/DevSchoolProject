@@ -6,8 +6,6 @@ pool:
 
 variables:
   resourceGroupName: 'DevSchool'
-  containerName: 'acrclideployment'
-  acrName: 'acrclideployment'
   imageName: 'webapp'
   imageTag: '$(Build.BuildId)'
   cpuCores: '1'
@@ -45,8 +43,10 @@ stages:
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
         inlineScript: |
-          az acr login --name $(acrName)
-          az acr build --registry $(acrName) --image $(imageName):$(imageTag) ./app
+          acrPassword=$(az keyvault secret show --name acr-password --vault-name $(keyVaultName) --query value -o tsv)
+          acrNameSecret=$(az keyvault secret show --name acrName --vault-name $(keyVaultName) --query value -o tsv)
+          docker login $acrNameSecret.azurecr.io  -u $acrNameSecret -p $acrPassword
+          az acr build --registry $acrNameSecret --image $(imageName):$(imageTag) ./app
 - stage: Deploy
   displayName: Deploy
   dependsOn: Build
@@ -64,7 +64,7 @@ stages:
         inlineScript: |
           acrPassword=$(az keyvault secret show --name acr-password --vault-name $(keyVaultName) --query value -o tsv)
           acrNameSecret=$(az keyvault secret show --name acrName --vault-name $(keyVaultName) --query value -o tsv)
-          az container create --resource-group $(resourceGroupName) --name $(containerName) --image $(acrName).azurecr.io/$(imageName):$(imageTag) --cpu $(cpuCores) --memory $(memoryGB) --registry-login-server $(acrName).azurecr.io --registry-username $acrNameSecret --registry-password $acrPassword --ip-address public --ports 5000
+          az container create --resource-group $(resourceGroupName) --name $acrNameSecret --image $acrNameSecret.azurecr.io/$(imageName):$(imageTag) --cpu $(cpuCores) --memory $(memoryGB) --registry-login-server $acrNameSecret.azurecr.io --registry-username $acrNameSecret --registry-password $acrPassword --ip-address public --ports 5000
 - stage: Test
   displayName: 'Test API with curl'
   dependsOn: Deploy
