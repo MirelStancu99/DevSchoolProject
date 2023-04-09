@@ -45,27 +45,42 @@ fi
 
 
 case $cmd in
+    #$ ./pipeline.sh build --dockerFilePath=. --imageName=webapp-script --imageTag=latest
     build)
         docker build -t $arg2:$arg3 $arg1
         ;;
+    #$ ./pipeline.sh push --containerRegistryUsername=mirelstancu99 --imageName=webapp-script --imageTag=latest
     push)
         docker tag $arg2 $arg1/$arg2:$arg3
         docker push $arg1/$arg2:$arg3
         ;;
+    #$ ./pipeline.sh pushacr --azureContainerRegistryName=acrdockerlocal --imageName=webapp-script --imageTag=latest
+    pushacr)
+        az login
+        ACR_NAME=$arg1
+        az acr login --name $ACR_NAME
+        docker tag $arg2 $ACR_NAME.azurecr.io/$arg2:$arg3
+        docker push $ACR_NAME.azurecr.io/$arg2:$arg3
+        ;;
+    #./pipeline.sh deploy --flavour='docker' --imageName=mirelstancu99/webapp-script --imageTag=latest
     deploy)
         if [[ $arg1 == "docker" ]]; then
             docker container run -dp 5000:5000 $arg2:$arg3
+
     	elif echo "$arg2" | grep -q "deployment"; then
 		arg4=$(echo $5 | cut -d'=' -f2)
 		arg5="${arg3}:${arg4}"
 		sed -i "s@image:.*@image: $arg5@" $arg2 2> /dev/null
-           	kubectl apply -f $arg2
+        minikube start
+        kubectl apply -f $arg2
+
 	    else
 		kubectl apply -f $arg2
 		minikube tunnel
 		
         fi
         ;;
+
     test)
         response=$(curl -s -o /dev/null -w "%{http_code}" $arg1)
 	    echo "Command: $response"
@@ -76,6 +91,7 @@ case $cmd in
             exit 1
         fi
         ;;
+
     man)
 	    cat manual.txt
 	;;
