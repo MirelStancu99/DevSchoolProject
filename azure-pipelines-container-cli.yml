@@ -25,7 +25,7 @@ stages:
     steps:
     - script: |
         #!/bin/bash
-        if ping -q -c 1 -W 1 google.com >/dev/null; then
+        if curl -sSf https://www.google.com > /dev/null; then
           echo "Connection available."
         else
           echo "Connection not available."
