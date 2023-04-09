@@ -3,7 +3,9 @@ COMMAND
 
           build   Build a Docker image from a Dockerfile.
 
-          push    Push a Docker image to a remote repository.
+          push    Push a Docker image to a remote repository on Docker Hub.
+
+          pushacr Push a Docker image to an Azure Container Registry.
 
           deploy  Deploy a Docker container using Docker or Minikube.
 
@@ -13,17 +15,22 @@ ARGUMENTS
           The arguments for each command are as follows:
 
           build   ARG1: path to the directory containing the Dockerfile.
-                  ARG2: name of the Docker image.
-                  ARG3: version of the Docker image.
+                  ARG2: name of the Docker image you want to build.
+                  ARG3: version (tag) of the Docker image.
 
-          push    ARG1: Docker image name.
-                  ARG2: Docker registry URL.
-                  ARG3: Docker image version.
+          push    ARG1: Docker Hub username.
+                  ARG2: name of the Docker image you want to push.
+                  ARG3: version (tag) of the Docker image.
+
+          pushacr ARG1: Azure Container Registry name
+                  ARG2: name of the Docker image you want to push.
+                  ARG3: version (tag) of the Docker image.
 
           deploy  ARG1: deployment type (either "docker" or "kubernetes").
-                  ARG2: path to the deployment configuration file.
-                  ARG3: Docker image name.
-                  ARG4: Docker image version (only for Kubernetes deployments).
-                  ARG5: (optional) Kubernetes namespace (only for Kubernetes deployments).
+                  ARG2: (for Kubernetes deployments) - path to the deployment configuration file.
+                        (for Docker deployments) - name of the image you want to deploy.
+                  ARG3: (for Docker deployments) - version (tag) of the Docker image.
+                        (for Kubernetes deployments) - name of the Docker image you want to deploy.
+                  ARG4: (only for Kubernetes deployments) - version (tag) of the Docker image.
 
-          test    ARG1: URL to test.
+          test    ARG1: URL to the endpoint you want to test the connection status.
