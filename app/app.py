@@ -255,10 +255,9 @@ def contact():
     conn.close()
 
     return render_template('contact.html', HOSTNAME = hostname, IP = ip, MAXCALORIES=maxResult,MINCALORIES=minResult, TOTALALIMENTE=total_foods)
+
 @app.route('/prezentare')
 def prezentare():
-    
-
     return render_template('prezentare.html')
 
 @app.route('/liveness')
