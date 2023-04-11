@@ -21,9 +21,9 @@ To deploy the Doctor FOOD application on the cloud using Azure pipelines, we can
 <h2>Azure WebApp Container</h2>
 To deploy the Doctor FOOD application on Azure WebApp Container, we can use Azure CLI or Azure portal. This will allow us to create a WebApp Container and deploy the Docker image on it.
 <h2>Azure CLI</h2>
-Azure CLI este o interfață de linie de comandă care ne permite să interacționăm cu serviciile Azure. Putem folosi Azure CLI pentru a gestiona și a automatiza diferite operațiuni în cadrul soluțiilor noastre Azure, inclusiv în ceea ce privește Doctor FOOD.
+Azure CLI is a command-line interface that allows us to interact with Azure services. We can use Azure CLI to manage and automate various operations within our Azure solutions, including those related to Doctor FOOD.
 <h2>Kubernetes</h2>
-Kubernetes este un sistem open-source de automatizare a deploimentelor, scalare și gestionare a aplicațiilor containerizate. Putem utiliza Kubernetes pentru a gestiona și a scala aplicația Doctor FOOD în mod eficient în cadrul unui mediu de cloud. Kubernetes CLI sau servicii precum Azure Kubernetes Service (AKS) ne permit să rulăm și să gestionăm cluster-e Kubernetes, iar astfel putem folosi acestea pentru a rula și a gestiona aplicația Doctor FOODs
+Kubernetes is an open-source system for automating the deployment, scaling, and management of containerized applications. We can use Kubernetes to effectively manage and scale the Doctor FOOD application within a cloud environment. Kubernetes CLI or services such as Azure Kubernetes Service (AKS) allow us to run and manage Kubernetes clusters, enabling us to use them to run and manage the Doctor FOOD application.
 
 <h2>/foods</h2>
 The /foods endpoint allows users to view all the foods stored in the application's database.
@@ -34,14 +34,14 @@ The /addFood endpoint allows users to add new foods to the application's databas
 <h2>/deleteFood</h2>
 The /deleteFood endpoint allows users to delete existing foods from the application's database.
 <h2>/api</h2>
-The /api endpoint allows users to access the application's API documentation.
+The /api endpoint allows users to view all the clients stored in a public api.
 <h2>/apiOrdonat</h2>
-The /apiOrdonat endpoint allows users to view all the foods stored in the application's database sorted in alphabetical order.
+The /apiOrdonat endpoint allows users to view all the clients stored in a public api sorted in alphabetical order.
 <h2>/liveness</h2>
 The /liveness endpoint allows users to test if the application is running and responding to requests.
 <h2>/check_api</h2>
 The /check_api endpoint allows users to check the status of the application's API.
 <h2>/prezentare</h2>
-The /prezentare endpoint provides a brief introduction to the Doctor FOOD application.
+The /prezentare endpoint provides a presentation of Doctor FOOD application.
 <h2>/contact</h2>
 The /contact endpoint provides contact information for the developers of the Doctor FOOD application.
